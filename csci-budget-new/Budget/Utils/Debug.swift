@@ -1,0 +1,26 @@
+//
+//  Debug.swift
+//  Budget
+//
+//  Created by Arthur Guiot on 10/21/24.
+//
+
+import Foundation
+
+func debug(
+    _ message: @autoclosure () -> String,
+    function: String = #function,
+    file: String = #file,
+    line: UInt = #line
+) {
+    assert(
+        {
+            let fileHandle = FileHandle.standardError
+            
+            let logLine = "[\(function) \(file.split(separator: "/").last!):\(line)] \(message())\n"
+            fileHandle.write(Data(logLine.utf8))
+            
+            return true
+        }()
+    )
+}
